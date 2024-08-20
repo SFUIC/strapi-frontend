@@ -1,4 +1,4 @@
-// ./frontend/src/app/[lang]/components/PageHeader.tsx
+// ./strapi-frontend/src/app/[lang]/components/PageHeader.tsx
 
 import React from "react";
 

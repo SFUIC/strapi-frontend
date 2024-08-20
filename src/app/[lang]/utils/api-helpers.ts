@@ -1,4 +1,4 @@
-// ./frontend/src/app/[lang]/utils/api-helpers.ts
+// ./strapi-frontend/src/app/[lang]/utils/api-helpers.ts
 
 export function getStrapiURL(path = "") {
   return `${

@@ -1,4 +1,4 @@
-// ./frontend/stc/app/[lang]/utils/fetch-api.tsx
+// ./strapi-frontend/stc/app/[lang]/utils/fetch-api.tsx
 import qs from "qs";
 import { getStrapiURL } from "./api-helpers";
 

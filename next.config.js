@@ -1,4 +1,4 @@
-// ./frontend/next.config.js
+// ./strapi-frontend/next.config.js
 
 /** @type {import('next').NextConfig} */
 

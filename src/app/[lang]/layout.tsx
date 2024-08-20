@@ -1,4 +1,4 @@
-// ./frontend/src/app/[lang]/layout.tsx
+// ./strapi-frontend/src/app/[lang]/layout.tsx
 
 import type { Metadata } from "next";
 import "./globals.css";

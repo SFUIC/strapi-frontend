@@ -1,4 +1,4 @@
-// ./frontend/src/app/[lang]/components/PostList.tsx
+// ./strapi-frontend/src/app/[lang]/components/PostList.tsx
 
 import Image from "next/image";
 import Link from "next/link";

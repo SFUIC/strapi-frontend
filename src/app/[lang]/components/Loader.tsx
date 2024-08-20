@@ -1,4 +1,4 @@
-// ./frontend/src/app/[lang]/components/Loader.tsx
+// ./strapi-frontend/src/app/[lang]/components/Loader.tsx
 export default function Loader() {
   return (
     <div className="absolute inset-0 flex items-center justify-center z-50  bg-opacity-40 bg-gray-500">
