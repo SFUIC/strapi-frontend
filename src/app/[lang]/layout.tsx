@@ -29,11 +29,14 @@ async function getGlobal(): Promise<any> {
       "favicon",
       "navbar.links",
       "navbar.navbarLogo.logoImg",
+      "navbar.navbarBackground",
       "footer.footerLogo.logoImg",
       "footer.menuLinks",
       "footer.legalLinks",
       "footer.socialLinks",
       "footer.categories",
+      "footer.footerBackground",
+      "background",
     ],
   };
 
@@ -69,17 +72,25 @@ export default async function RootLayout({
   // TODO: CREATE A CUSTOM ERROR PAGE
   if (!global.data) return null;
 
-  const { navbar, footer } = global.data.attributes;
-  console.log("[Footer]");
-  console.log(footer);
+  const { navbar, footer, background } = global.data.attributes;
 
   const navbarLogoUrl = getStrapiMedia(
     navbar.navbarLogo.logoImg.data.attributes.url
   );
 
+  const navbarBackgroundUrl = navbar.navbarBackground.data
+    ? getStrapiMedia(navbar.navbarBackground.data.attributes?.url)
+    : null;
+
   const footerLogoUrl = getStrapiMedia(
     footer.footerLogo.logoImg.data.attributes.url
   );
+
+  const footerBackgroundUrl = footer.footerBackground.data
+    ? getStrapiMedia(footer.footerBackground.data.attributes.url)
+    : null;
+
+  const backgroundUrl = getStrapiMedia(background?.data?.attributes?.url);
 
   return (
     <html lang={params.lang}>
@@ -88,9 +99,18 @@ export default async function RootLayout({
           links={navbar.links}
           logoUrl={navbarLogoUrl}
           logoText={navbar.navbarLogo.logoText}
+          backgroundUrl={navbarBackgroundUrl}
         />
 
-        <main className="dark:bg-black dark:text-gray-100 min-h-screen">
+        <main
+          className="dark:bg-black dark:text-gray-100 min-h-screen"
+          style={{
+            backgroundImage: backgroundUrl ? `url(${backgroundUrl})` : "none",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundColor: "#d3d3d3",
+          }}
+        >
           {children}
         </main>
 
@@ -101,6 +121,7 @@ export default async function RootLayout({
           categoryLinks={footer.categories.data}
           legalLinks={footer.legalLinks}
           socialLinks={footer.socialLinks}
+          backgroundUrl={footerBackgroundUrl}
         />
       </body>
     </html>

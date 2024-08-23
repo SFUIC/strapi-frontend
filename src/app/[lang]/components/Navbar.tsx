@@ -33,13 +33,23 @@ export default function Navbar({
   links,
   logoUrl,
   logoText,
+  backgroundUrl,
 }: {
   links: Array<NavLink>;
   logoUrl: string | null;
   logoText: string | null;
+  backgroundUrl: string | null;
 }) {
   return (
-    <div className="p-4 dark:bg-black dark:text-gray-100">
+    <div
+      className="p-4 dark:bg-black dark:text-black-100"
+      style={{
+        backgroundImage: backgroundUrl ? `url(${backgroundUrl})` : "none",
+        backgroundColor: backgroundUrl ? "transparent" : "#d3d3d3",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
       <div className="container flex justify-between h-16 mx-auto px-0 sm:px-6">
         <Logo src={logoUrl}>
           {logoText && <h2 className="text-2xl font-bold">{logoText}</h2>}
