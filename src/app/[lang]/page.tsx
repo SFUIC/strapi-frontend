@@ -5,6 +5,7 @@ import { fetchAPI } from "./utils/fetch-api";
 import Loader from "./components/Loader";
 import PostList from "./components/PostList";
 import PageHeader from "./components/PageHeader";
+import Intro from "./components/Intro";
 
 interface Meta {
   pagination: {
@@ -69,20 +70,34 @@ export default function Profile() {
   return (
     <div>
       <PageHeader heading="SFU Iranian Club" text="Checkout Something Cool" />
-      <PostList data={data}>
-        {meta!.pagination.start + meta!.pagination.limit <
-          meta!.pagination.total && (
-          <div className="flex justify-center">
-            <button
-              type="button"
-              className="px-6 py-3 text-sm rounded-lg hover:underline dark:bg-gray-900 dark:text-gray-400"
-              onClick={loadMorePosts}
-            >
-              Load more posts...
-            </button>
+      <div className="flex flex-row">
+        <div className="w-1/3 p-4">
+          <div className="p-4  grid grid-rows-2 gap-4">
+            <div className="flex items-center justify-center">
+              <Intro />
+            </div>
+            <div className="flex items-center justify-center">
+              Bottom Section Content
+            </div>
           </div>
-        )}
-      </PostList>
+        </div>
+        <div className="w-2/3 p-4">
+          <PostList data={data}>
+            {meta!.pagination.start + meta!.pagination.limit <
+              meta!.pagination.total && (
+                <div className="flex justify-center">
+                  <button
+                    type="button"
+                    className="px-6 py-3 text-sm rounded-lg hover:underline dark:bg-gray-900 dark:text-gray-400"
+                    onClick={loadMorePosts}
+                  >
+                    Load more posts...
+                  </button>
+                </div>
+              )}
+          </PostList>
+        </div>
+      </div>
     </div>
   );
 }

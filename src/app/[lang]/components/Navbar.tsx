@@ -19,9 +19,8 @@ function NavLink({ url, text }: NavLink) {
     <li className="flex">
       <Link
         href={url}
-        className={`flex items-center mx-4 -mb-1 border-b-2 dark:border-transparent ${
-          path === url && "dark:text-violet-400 dark:border-violet-400"
-        }}`}
+        className={`flex items-center mx-4 -mb-1 border-b-2 dark:border-transparent ${path === url && "dark:text-violet-400 dark:border-violet-400"
+          }}`}
       >
         {text}
       </Link>
@@ -42,10 +41,10 @@ export default function Navbar({
 }) {
   return (
     <div
-      className="p-4 dark:bg-black dark:text-black-100"
+      className="p-4 dark:bg-customGray dark:text-black-100"
       style={{
         backgroundImage: backgroundUrl ? `url(${backgroundUrl})` : "none",
-        backgroundColor: backgroundUrl ? "transparent" : "#d3d3d3",
+        backgroundColor: backgroundUrl ? "transparent" : "bg-customGray",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

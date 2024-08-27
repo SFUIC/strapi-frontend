@@ -2,17 +2,8 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Logo from "./Logo";
-import { CgWebsite } from "react-icons/cg";
-import { FaDiscord } from "react-icons/fa";
-import { AiFillTwitterCircle, AiFillYoutube } from "react-icons/ai";
-
-interface FooterLink {
-  id: number;
-  url: string;
-  newTab: boolean;
-  text: string;
-  social?: string;
-}
+import { RenderIcon } from "../utils/icon-renderer";
+import { SocialLink } from "../types";
 
 interface CategoryLink {
   id: string;
@@ -22,15 +13,14 @@ interface CategoryLink {
   };
 }
 
-function FooterLink({ url, text }: FooterLink) {
+function FooterLink({ url, text }: SocialLink) {
   const path = usePathname();
   return (
     <li className="flex">
       <Link
         href={url}
-        className={`hover:dark:text-violet-400 ${
-          path === url && "dark:text-violet-400 dark:border-violet-400"
-        }}`}
+        className={`hover:dark:text-violet-400 ${path === url && "dark:text-violet-400 dark:border-violet-400"
+          }}`}
       >
         {text}
       </Link>
@@ -48,21 +38,6 @@ function CategoryLink({ attributes }: CategoryLink) {
   );
 }
 
-function RenderSocialIcon({ social }: { social: string | undefined }) {
-  switch (social) {
-    case "WEBSITE":
-      return <CgWebsite />;
-    case "TWITTER":
-      return <AiFillTwitterCircle />;
-    case "YOUTUBE":
-      return <AiFillYoutube />;
-    case "DISCORD":
-      return <FaDiscord />;
-    default:
-      return null;
-  }
-}
-
 export default function Footer({
   logoUrl,
   logoText,
@@ -74,18 +49,18 @@ export default function Footer({
 }: {
   logoUrl: string | null;
   logoText: string | null;
-  menuLinks: Array<FooterLink>;
+  menuLinks: Array<SocialLink>;
   categoryLinks: Array<CategoryLink>;
-  legalLinks: Array<FooterLink>;
-  socialLinks: Array<FooterLink>;
+  legalLinks: Array<SocialLink>;
+  socialLinks: Array<SocialLink>;
   backgroundUrl: string | null;
 }) {
   return (
     <footer
-      className="py-6 dark:bg-black dark:text-black-50"
+      className="py-6 dark:bg-customGray dark:text-black-50"
       style={{
         backgroundImage: backgroundUrl ? `url(${backgroundUrl})` : "none",
-        backgroundColor: backgroundUrl ? "transparent" : "#d3d3d3",
+        backgroundColor: backgroundUrl ? "transparent" : "bg-customGray",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -110,7 +85,7 @@ export default function Footer({
           <div className="col-span-6 text-center md:text-left md:col-span-3">
             <p className="pb-1 text-lg font-medium">Menu</p>
             <ul>
-              {menuLinks.map((link: FooterLink) => (
+              {menuLinks.map((link: SocialLink) => (
                 <FooterLink key={link.id} {...link} />
               ))}
             </ul>
@@ -122,7 +97,7 @@ export default function Footer({
               ©{new Date().getFullYear()} All rights reserved
             </span>
             <ul className="flex">
-              {legalLinks.map((link: FooterLink) => (
+              {legalLinks.map((link: SocialLink) => (
                 <Link
                   href={link.url}
                   className="text-gray-400 hover:text-gray-300 mr-2"
@@ -134,7 +109,7 @@ export default function Footer({
             </ul>
           </div>
           <div className="flex justify-center pt-4 space-x-4 lg:pt-0 lg:col-end-13">
-            {socialLinks.map((link: FooterLink) => {
+            {socialLinks.map((link: SocialLink) => {
               return (
                 <a
                   key={link.id}
@@ -144,7 +119,7 @@ export default function Footer({
                   target={link.newTab ? "_blank" : "_self"}
                   className="flex items-center justify-center w-10 h-10 rounded-full dark:bg-violet-400 dark:text-gray-900"
                 >
-                  <RenderSocialIcon social={link.social} />
+                  <RenderIcon type={link.social} />
                 </a>
               );
             })}

@@ -8,13 +8,14 @@ import { fetchAPI } from "./utils/fetch-api";
 import { i18n } from "../../../i18n-config";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
+import { GlobalProvider } from "./GlobalContext";
 
 const FALLBACK_SEO = {
   title: "Strapi Starter Next Blog",
   description: "Strapi Starter Next Blog",
 };
 
-async function getGlobal(): Promise<any> {
+export async function getGlobal(): Promise<any> {
   const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
   if (!token)
@@ -33,10 +34,10 @@ async function getGlobal(): Promise<any> {
       "footer.footerLogo.logoImg",
       "footer.menuLinks",
       "footer.legalLinks",
-      "footer.socialLinks",
       "footer.categories",
       "footer.footerBackground",
       "background",
+      "socialLinks",
     ],
   };
 
@@ -72,7 +73,7 @@ export default async function RootLayout({
   // TODO: CREATE A CUSTOM ERROR PAGE
   if (!global.data) return null;
 
-  const { navbar, footer, background } = global.data.attributes;
+  const { navbar, footer, background, socialLinks } = global.data.attributes;
 
   const navbarLogoUrl = getStrapiMedia(
     navbar.navbarLogo.logoImg.data.attributes.url
@@ -95,34 +96,34 @@ export default async function RootLayout({
   return (
     <html lang={params.lang}>
       <body>
-        <Navbar
-          links={navbar.links}
-          logoUrl={navbarLogoUrl}
-          logoText={navbar.navbarLogo.logoText}
-          backgroundUrl={navbarBackgroundUrl}
-        />
+        <GlobalProvider value={{ navbar, footer, background, socialLinks }}>
+          <Navbar
+            links={navbar.links}
+            logoUrl={navbarLogoUrl}
+            logoText={navbar.navbarLogo.logoText}
+            backgroundUrl={navbarBackgroundUrl}
+          />
 
-        <main
-          className="dark:bg-black dark:text-gray-100 min-h-screen"
-          style={{
-            backgroundImage: backgroundUrl ? `url(${backgroundUrl})` : "none",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundColor: "#d3d3d3",
-          }}
-        >
-          {children}
-        </main>
+          <main
+            className={`dark:bg-black dark:text-gray-100 min-h-screen bg-gray-300 bg-cover bg-center ${backgroundUrl ? "" : "bg-none"
+              }`}
+            style={{
+              backgroundImage: backgroundUrl ? `url(${backgroundUrl})` : "none",
+            }}
+          >
+            {children}
+          </main>
 
-        <Footer
-          logoUrl={footerLogoUrl}
-          logoText={footer.footerLogo.logoText}
-          menuLinks={footer.menuLinks}
-          categoryLinks={footer.categories.data}
-          legalLinks={footer.legalLinks}
-          socialLinks={footer.socialLinks}
-          backgroundUrl={footerBackgroundUrl}
-        />
+          <Footer
+            logoUrl={footerLogoUrl}
+            logoText={footer.footerLogo.logoText}
+            menuLinks={footer.menuLinks}
+            categoryLinks={footer.categories.data}
+            legalLinks={footer.legalLinks}
+            socialLinks={socialLinks}
+            backgroundUrl={footerBackgroundUrl}
+          />
+        </GlobalProvider>
       </body>
     </html>
   );
