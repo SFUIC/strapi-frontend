@@ -5,7 +5,7 @@ import Logo from "./Logo";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
-import { casLogin } from "../utils/cas-auth";
+import SessionLink from "./SessionLink";
 
 interface NavLink {
   id: number;
@@ -30,36 +30,6 @@ function NavLink({ url, text }: NavLink) {
   );
 }
 
-
-function SessionLink() {
-  const { userData, setUserData } = useAuth();
-  const url = userData ? "https://cas.sfu.ca/cas/logout" : `https://cas.sfu.ca/cas/login?service=${process.env.SERVICE_URL}`;
-  const text = userData ? "Logout" : "Login";
-  return (
-    <li className="flex">
-      <Link
-        href={url}
-        className={`flex items-center mx-4 -mb-1 border-b-2 dark:border-transparent ${userData ? "dark:text-violet-400 dark:border-violet-400" : ""
-          }`}
-        onClick={async (e) => {
-          e.preventDefault(); // Prevent the default link behavior
-          if (userData) {
-            setUserData(null); // Clear the auth context
-            // localStorage.removeItem('userData'); // Remove userData from local storage
-          } else {
-            const newData = await casLogin();
-            setUserData(newData); // Set the auth context with new user data
-            // localStorage.setItem('userData', JSON.stringify(newUserData)); // Store userData in local storage
-          }
-          window.location.href = url;
-        }}
-      >
-        {text}
-      </Link>
-    </li>
-  );
-}
-
 export default function Navbar({
   links,
   logoUrl,
@@ -71,6 +41,9 @@ export default function Navbar({
   logoText: string | null;
   backgroundUrl: string | null;
 }) {
+  const { userData } = useAuth();
+  const userID = userData ? userData["cas:user"]["_text"] : null;
+
   return (
     <div
       className=" dark:bg-customGray dark:text-black-100"
@@ -88,9 +61,14 @@ export default function Navbar({
 
         <div className="items-center flex-shrink-0 hidden lg:flex">
           <ul className="items-stretch hidden space-x-3 lg:flex">
-            <SessionLink key={-1} />
+            {userID && (
+              <li key={0} className={`flex items-center mx-4 -mb-1 border-b-2 dark:border-transparent`}>
+                Logged in as {userID}
+              </li>
+            )}
+            <SessionLink key={1} />
             {links.map((item: NavLink) => (
-              <NavLink key={item.id} {...item} />
+              <NavLink key={item.id + 3} {...item} />
             ))}
           </ul>
         </div>

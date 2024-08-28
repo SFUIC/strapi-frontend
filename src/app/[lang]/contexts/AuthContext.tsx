@@ -1,15 +1,9 @@
 'use client';
 import { createContext, useContext, useState, useEffect } from 'react';
 
-// Define the shape of the context value
-interface UserData {
-    userId: string;
-    // Add other properties you want to store in the user data, such as name, email, roles, etc.
-}
-
 interface AuthContextType {
-    userData: UserData | null;
-    setUserData: (data: UserData | null) => void;
+    userData: any | null;
+    setUserData: (data: any | null) => void;
 }
 
 // Create the context with a default value
@@ -19,9 +13,24 @@ const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [userData, setUserData] = useState<UserData | null>(null);
+    const [userData, setUserData] = useState<any | null>(null);
 
-    // You can add a useEffect here if you want to initialize userData from somewhere, like local storage
+    // useEffect to check localStorage on initial load
+    useEffect(() => {
+        const storedUserData = localStorage.getItem('userData');
+        if (storedUserData) {
+            setUserData(JSON.parse(storedUserData));
+        }
+    }, []);
+
+    // Update localStorage whenever userData changes
+    useEffect(() => {
+        if (userData) {
+            localStorage.setItem('userData', JSON.stringify(userData));
+        } else {
+            localStorage.removeItem('userData');
+        }
+    }, [userData]);
 
     const value = { userData, setUserData };
 
@@ -29,3 +38,4 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 };
 
 export const useAuth = () => useContext(AuthContext);
+

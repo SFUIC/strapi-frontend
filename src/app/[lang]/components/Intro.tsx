@@ -12,7 +12,6 @@ interface InfoLink {
 
 export default function Intro() {
     const { socialLinks, club } = useGlobal();
-    console.log(socialLinks)
     return (
         <div className="bg-white rounded-lg shadow-md w-full max-w-md mx-auto">
             <div className="px-8 pt-8">
