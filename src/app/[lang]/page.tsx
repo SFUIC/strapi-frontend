@@ -6,6 +6,7 @@ import Loader from "./components/Loader";
 import PostList from "./components/PostList";
 import PageHeader from "./components/PageHeader";
 import Intro from "./components/Intro";
+import CommentForm from "./components/CommentForm";
 
 interface Meta {
   pagination: {
@@ -72,9 +73,12 @@ export default function Profile() {
       <PageHeader heading="SFU Iranian Club" text="Checkout Something Cool" />
       <div className="flex flex-row">
         <div className="w-1/3 p-4">
-          <div className="p-4  grid grid-rows-2 gap-4">
+          <div className="p-4  grid grid-rows-3 gap-8">
             <div className="flex items-center justify-center">
               <Intro />
+            </div>
+            <div className="flex items-center justify-center">
+              <CommentForm />
             </div>
             <div className="flex items-center justify-center">
               Bottom Section Content

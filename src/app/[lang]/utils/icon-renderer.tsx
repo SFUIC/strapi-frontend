@@ -6,7 +6,6 @@ import { AiFillTwitterCircle, AiFillYoutube } from 'react-icons/ai';
 import { BiInfoCircle } from 'react-icons/bi';
 
 export function RenderIcon({ type }: { type: String | undefined }): JSX.Element {
-    console.log("icontype:" + type)
     switch (type) {
         case 'ADDRESS':
             return <CgHome />;

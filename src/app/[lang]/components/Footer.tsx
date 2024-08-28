@@ -117,7 +117,7 @@ export default function Footer({
                   href={link.url}
                   title={link.text}
                   target={link.newTab ? "_blank" : "_self"}
-                  className="flex items-center justify-center w-10 h-10 rounded-full dark:bg-violet-400 dark:text-gray-900"
+                  className="flex items-center justify-center w-10 h-10 rounded-full dark:bg-sfuLightRed dark:text-gray-900"
                 >
                   <RenderIcon type={link.social} />
                 </a>

@@ -1,12 +1,12 @@
-'use client'; // This line ensures that the component is treated as a client component
-
-import React, { createContext, useContext, ReactNode } from 'react';
+'use client';
+import { createContext, useContext, ReactNode } from 'react';
 
 interface GlobalData {
     navbar: any;
     footer: any;
     background: any;
     socialLinks: any;
+    club: any;
 }
 
 const GlobalContext = createContext<GlobalData | undefined>(undefined);

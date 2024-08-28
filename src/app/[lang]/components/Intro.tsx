@@ -1,5 +1,5 @@
 "use client";
-import { useGlobal } from "../GlobalContext";
+import { useGlobal } from "../contexts/GlobalContext";
 import { Key } from "react";
 import { RenderIcon } from "../utils/icon-renderer";
 import { SocialLink } from "../types";
@@ -11,16 +11,22 @@ interface InfoLink {
 }
 
 export default function Intro() {
-    const { socialLinks } = useGlobal();
+    const { socialLinks, club } = useGlobal();
     console.log(socialLinks)
     return (
         <div className="bg-white rounded-lg shadow-md w-full max-w-md mx-auto">
-            <div className="p-8">
+            <div className="px-8 pt-8">
                 <p className="text-gray-700">
-                    This is a short paragraph description that introduces the content or
-                    purpose of the box. It should be concise and to the point, providing a
-                    clear overview of the information presented below.
+                    {club.clubIntro}
                 </p>
+            </div>
+            <div className="m-4 flex justify-center">
+                <a
+                    href={club.clubJoinLink}
+                    className="bg-blue-500 text-white mx-12 px-4 py-2 rounded-full dark:bg-sfuLightRed w-full"
+                >
+                    <center>JOIN CLUB</center>
+                </a>
             </div>
             <hr className="mx-8 border-gray-300" />
             <div className="p-8 space-y-2 text-gray-600">
