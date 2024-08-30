@@ -56,7 +56,7 @@ export default function Navbar({
     >
       <div className="container flex justify-between h-16 mx-auto px-0 sm:px-6">
         <Logo src={logoUrl}>
-          {logoText && <h2 className="text-2xl font-bold">{logoText}</h2>}
+          {logoText && <h2 className="text-2xl font-bold text-sfuDarkRed" style={{ fontFamily: "Trebuchet MS" }}>{logoText}</h2>}
         </Logo>
 
         <div className="items-center flex-shrink-0 hidden lg:flex">

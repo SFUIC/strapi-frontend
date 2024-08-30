@@ -42,19 +42,22 @@ interface Article {
         };
       };
     };
+    rsvpUrl?: string;
   };
 }
 
 export default function PostList({
+  cols,
   data: articles,
   children,
 }: {
+  cols: Number;
   data: Article[];
   children?: React.ReactNode;
 }) {
   return (
     <section className="container p-6 mx-auto space-y-6 sm:space-y-12">
-      <div className="grid justify-center grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
+      <div className={`grid justify-center grid-cols-${cols} gap-6`}>
         {articles.map((article) => {
           const imageUrl = getStrapiMedia(
             article.attributes.cover.data?.attributes.url
@@ -107,6 +110,17 @@ export default function PostList({
                     </span>
                   )}
                 </div>
+                {article.attributes.rsvpUrl &&
+                  <button
+                    className="inline-block px-6 py-3 text-sm font-medium text-white bg-sfuLightRed hover:bg-sfuDarkRed rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    onClick={(e) => {
+                      window.open(article.attributes.rsvpUrl);
+                      e.stopPropagation();
+                    }}
+                  >
+                    RSVP
+                  </button>
+                }
                 <p className="py-4">{article.attributes.description}</p>
               </div>
             </Link>

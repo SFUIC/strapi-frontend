@@ -29,6 +29,7 @@ interface Article {
         };
       };
     };
+    rsvpUrl?: string;
     blocks: any[];
     publishedAt: string;
   };
@@ -44,7 +45,7 @@ export default function Post({ data }: { data: Article }) {
   );
 
   return (
-    <article className="space-y-8 dark:bg-black dark:text-gray-50">
+    <article className="space-y-8 dark:bg-black dark:text-gray-50 rounded-lg">
       {imageUrl && (
         <Image
           src={imageUrl}
@@ -54,7 +55,7 @@ export default function Post({ data }: { data: Article }) {
           className="w-full h-96 object-cover rounded-lg"
         />
       )}
-      <div className="space-y-6">
+      <div className="space-y-6 p-8">
         <h1 className="leading-tight text-5xl font-bold ">{title}</h1>
         <div className="flex flex-col items-start justify-between w-full md:flex-row md:items-center dark:text-gray-400">
           <div className="flex items-center md:space-x-2">
@@ -74,7 +75,7 @@ export default function Post({ data }: { data: Article }) {
         </div>
       </div>
 
-      <div className="dark:text-gray-100">
+      <div className="dark:text-gray-100 p-8">
         <p>{description}</p>
 
         {data.attributes.blocks.map((section: any, index: number) =>

@@ -6,7 +6,10 @@ import Loader from "./components/Loader";
 import PostList from "./components/PostList";
 import PageHeader from "./components/PageHeader";
 import Intro from "./components/Intro";
-import CommentForm from "./components/CommentForm";
+import FeedbackForm from "./components/FeedbackForm";
+import { MdExpandMore } from "react-icons/md";
+import { getPageBySlug } from "./services/page";
+import { getStrapiMedia } from "./utils/api-helpers";
 
 interface Meta {
   pagination: {
@@ -19,6 +22,7 @@ interface Meta {
 export default function Profile() {
   const [meta, setMeta] = useState<Meta | undefined>();
   const [data, setData] = useState<any>([]);
+  const [landingPage, setLandingPage] = useState<any>(null);
   const [isLoading, setLoading] = useState(true);
 
   const fetchData = useCallback(async (start: number, limit: number) => {
@@ -62,31 +66,45 @@ export default function Profile() {
     fetchData(nextPosts, Number(process.env.NEXT_PUBLIC_PAGE_LIMIT));
   }
 
+  const fetchLandingPage = useCallback(async () => {
+    try {
+      const landingPage = await getPageBySlug("landing");
+      setLandingPage(landingPage);
+    } catch (error) {
+      console.error("Failed to fetch landing page data:", error);
+    }
+  }, []);
+
   useEffect(() => {
     fetchData(0, Number(process.env.NEXT_PUBLIC_PAGE_LIMIT));
-  }, [fetchData]);
+    fetchLandingPage();
+  }, [fetchData, fetchLandingPage]);
+
+  if (!landingPage || !landingPage.data) return null;
+  const { content } = landingPage.data[0].attributes;
+  const { background, titleMain, titleSub } = content[0];
+  const { introDescription, joinLink } = content[1];
+  const featureBannerBackgroundUrl = getStrapiMedia(background.data.attributes.url);
+  console.log(content);
 
   if (isLoading) return <Loader />;
 
   return (
-    <div>
-      <PageHeader heading="SFU Iranian Club" text="Checkout Something Cool" />
+    <div className="h-full">
+      <PageHeader headingMain={titleMain} headingSub={titleSub} mediaSrc={featureBannerBackgroundUrl} mediaExt={background.data.attributes.ext} />
       <div className="flex flex-row">
         <div className="w-1/3 p-4">
-          <div className="p-4  grid grid-rows-3 gap-8">
-            <div className="flex items-center justify-center">
-              <Intro />
+          <div className="p-4 grid items-start gap-8">
+            <div className="flex justify-center">
+              <Intro description={introDescription} joinLink={joinLink} />
             </div>
-            <div className="flex items-center justify-center">
-              <CommentForm />
-            </div>
-            <div className="flex items-center justify-center">
-              Bottom Section Content
+            <div className="flex justify-center">
+              <FeedbackForm />
             </div>
           </div>
         </div>
         <div className="w-2/3 p-4">
-          <PostList data={data}>
+          <PostList cols={2} data={data}>
             {meta!.pagination.start + meta!.pagination.limit <
               meta!.pagination.total && (
                 <div className="flex justify-center">
@@ -95,7 +113,7 @@ export default function Profile() {
                     className="px-6 py-3 text-sm rounded-lg hover:underline dark:bg-gray-900 dark:text-gray-400"
                     onClick={loadMorePosts}
                   >
-                    Load more posts...
+                    <MdExpandMore />
                   </button>
                 </div>
               )}

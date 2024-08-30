@@ -69,7 +69,7 @@ export default function Footer({
         <div className="grid grid-cols-12">
           <div className="pb-6 col-span-full md:pb-0 md:col-span-6">
             <Logo src={logoUrl}>
-              {logoText && <h2 className="text-2xl font-bold">{logoText}</h2>}
+              {logoText && <h2 className="text-2xl font-bold text-sfuDarkRed" style={{ fontFamily: "Trebuchet MS" }}>{logoText}</h2>}
             </Logo>
           </div>
 

@@ -6,7 +6,6 @@ interface GlobalData {
     footer: any;
     background: any;
     socialLinks: any;
-    club: any;
 }
 
 const GlobalContext = createContext<GlobalData | undefined>(undefined);

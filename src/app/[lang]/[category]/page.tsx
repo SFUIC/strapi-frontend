@@ -46,7 +46,7 @@ export default async function CategoryRoute({
   return (
     <div>
       <PageHeader heading={name} text={description} />
-      <PostList data={data} />
+      <PostList cols={2} data={data} />
     </div>
   );
 }

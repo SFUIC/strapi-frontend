@@ -18,8 +18,21 @@ const config: Config = {
         sfuLightRed: "#CC0633",
         sfuDarkRed: "#A6192E",
       },
+      spacing: {
+        "41": "11rem",
+        "80": "20rem",
+        "100": "25rem",
+      },
     },
   },
   plugins: [],
+  safelist: [
+    "grid-cols-2",
+    "grid-cols-3",
+    "grid-cols-4",
+    "gap-4",
+    "gap-6",
+    // Add other classes you use dynamically
+  ],
 };
 export default config;

@@ -10,43 +10,12 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import { GlobalProvider } from "./contexts/GlobalContext";
 import { AuthProvider } from "./contexts/AuthContext";
+import { getGlobal } from "./services/global";
 
 const FALLBACK_SEO = {
-  title: "Strapi Starter Next Blog",
-  description: "Strapi Starter Next Blog",
+  title: "SFU Iranian Club",
+  description: "SFU Iranian Club",
 };
-
-export async function getGlobal(): Promise<any> {
-  const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
-
-  if (!token)
-    throw new Error("The Strapi API Token environment variable is not set.");
-
-  const path = `/global`;
-  const options = { headers: { Authorization: `Bearer ${token}` } };
-
-  const urlParamsObject = {
-    populate: [
-      "metadata.shareImage",
-      "favicon",
-      "navbar.links",
-      "navbar.navbarLogo.logoImg",
-      "navbar.navbarBackground",
-      "footer.footerLogo.logoImg",
-      "footer.menuLinks",
-      "footer.legalLinks",
-      "footer.categories",
-      "footer.footerBackground",
-      "background",
-      "socialLinks",
-      "club.clubJoinLink",
-      "club.clubIntro",
-    ],
-  };
-
-  const response = await fetchAPI(path, urlParamsObject, options);
-  return response;
-}
 
 export async function generateMetadata(): Promise<Metadata> {
   const meta = await getGlobal();
@@ -100,7 +69,7 @@ export default async function RootLayout({
     <html lang={params.lang}>
       <body>
         <AuthProvider>
-          <GlobalProvider value={{ navbar, footer, background, socialLinks, club }}>
+          <GlobalProvider value={{ navbar, footer, background, socialLinks }}>
             <div className="fixed top-0 left-0 right-0 z-50">
               <Navbar
                 links={navbar.links}

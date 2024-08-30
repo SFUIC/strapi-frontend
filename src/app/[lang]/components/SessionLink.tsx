@@ -29,7 +29,6 @@ export default function SessionLink() {
                 const queryParams = new URLSearchParams(window.location.search);
                 const ticket = queryParams.get('ticket');
                 if (ticket) {
-                    // console.log("Validating ticket: " + ticket);
                     const response = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/proxy/validateTicket`, {
                         params: { serviceUrl: window.location.origin + window.location.pathname, ticket: ticket }
                     });
