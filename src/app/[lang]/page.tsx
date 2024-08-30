@@ -81,11 +81,10 @@ export default function Profile() {
   }, [fetchData, fetchLandingPage]);
 
   if (!landingPage || !landingPage.data) return null;
-  const { content } = landingPage.data[0].attributes;
-  const { background, titleMain, titleSub } = content[0];
-  const { introDescription, joinLink } = content[1];
+  const { chunks } = landingPage.data[0].attributes;
+  const { background, titleMain, titleSub } = chunks[0];
+  const { introDescription, joinLink } = chunks[1];
   const featureBannerBackgroundUrl = getStrapiMedia(background.data.attributes.url);
-  console.log(content);
 
   if (isLoading) return <Loader />;
 

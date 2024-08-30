@@ -7,7 +7,7 @@ export async function getPageBySlug(slug: string) {
     filters: { slug },
     populate: {
       metadata: { populate: "*" },
-      content: { populate: "*" },
+      chunks: { populate: "*" },
       shortName: { populate: "*" },
       heading: { populate: "*" },
       description: { populate: "*" },

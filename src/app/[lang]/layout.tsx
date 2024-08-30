@@ -3,7 +3,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { getStrapiMedia, getStrapiURL } from "./utils/api-helpers";
-import { fetchAPI } from "./utils/fetch-api";
 
 import { i18n } from "../../../i18n-config";
 import Footer from "./components/Footer";

@@ -18,6 +18,10 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "via.placeholder.com",
+      },
+      {
+        protocol: "https",
         hostname: process.env.NEXT_PUBLIC_STRAPI_API_URL,
         pathname: "/uploads/**", // Strapi backend uploads path
       },
