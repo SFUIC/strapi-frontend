@@ -8,7 +8,7 @@ import PageHeader from "./components/PageHeader";
 import Intro from "./components/Intro";
 import FeedbackForm from "./components/FeedbackForm";
 import { MdExpandMore } from "react-icons/md";
-import { getPageBySlug } from "./services/page";
+import { getPageBySlug } from "./services/pageSvc";
 import { getStrapiMedia } from "./utils/api-helpers";
 
 interface Meta {

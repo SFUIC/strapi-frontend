@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { getPageBySlug } from '../services/page';
+import { getPageBySlug } from '../services/pageSvc';
 import { getStrapiMedia } from '../utils/api-helpers';
 
 export default async function AboutPage() {
