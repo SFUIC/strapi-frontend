@@ -8,8 +8,9 @@ import PageHeader from "./components/PageHeader";
 import Intro from "./components/Intro";
 import FeedbackForm from "./components/FeedbackForm";
 import { MdExpandMore } from "react-icons/md";
-import { getPageBySlug } from "./services/pageSvc";
+import { getPage } from "./services/pageSvc";
 import { getStrapiMedia } from "./utils/api-helpers";
+import { useLocale } from "./contexts/LocaleContext";
 
 interface Meta {
   pagination: {
@@ -22,8 +23,9 @@ interface Meta {
 export default function Profile() {
   const [meta, setMeta] = useState<Meta | undefined>();
   const [data, setData] = useState<any>([]);
-  const [landingPage, setLandingPage] = useState<any>(null);
+  const [pages, setLandingPage] = useState<any>(null);
   const [isLoading, setLoading] = useState(true);
+  const { locale } = useLocale();
 
   const fetchData = useCallback(async (start: number, limit: number) => {
     setLoading(true);
@@ -68,7 +70,7 @@ export default function Profile() {
 
   const fetchLandingPage = useCallback(async () => {
     try {
-      const landingPage = await getPageBySlug("landing");
+      const landingPage = await getPage(locale);
       setLandingPage(landingPage);
     } catch (error) {
       console.error("Failed to fetch landing page data:", error);
@@ -80,8 +82,8 @@ export default function Profile() {
     fetchLandingPage();
   }, [fetchData, fetchLandingPage]);
 
-  if (!landingPage || !landingPage.data) return null;
-  const { chunks } = landingPage.data[0].attributes;
+  if (!pages || !pages.data) return null;
+  const { chunks } = pages.data[1].attributes;
   const { background, titleMain, titleSub } = chunks[0];
   const { description, join } = chunks[1];
   const featureBannerBackgroundUrl = getStrapiMedia(background.data.attributes.url);

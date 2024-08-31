@@ -1,6 +1,6 @@
 import { fetchAPI } from "../utils/fetch-api";
 
-export async function getGlobal(): Promise<any> {
+export async function getGlobal(locale?: string): Promise<any> {
   const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
   if (!token)
@@ -10,6 +10,7 @@ export async function getGlobal(): Promise<any> {
   const options = { headers: { Authorization: `Bearer ${token}` } };
 
   const urlParamsObject = {
+    locale: locale ? locale : "en",
     populate: [
       "metadata.shareImage",
       "favicon",

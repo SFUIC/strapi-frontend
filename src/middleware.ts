@@ -8,7 +8,17 @@ import { i18n } from "../i18n-config";
 import { match as matchLocale } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
 
+export const LOCALE_COOKIE_NAME = "NEXT_LOCALE";
+
 function getLocale(request: NextRequest): string | undefined {
+  const localeFromCookie: string | undefined =
+    request.cookies.get(LOCALE_COOKIE_NAME)?.value;
+
+  // @ts-ignore
+  if (localeFromCookie && i18n.locales.includes(localeFromCookie)) {
+    return localeFromCookie;
+  }
+
   // Negotiator expects plain object so we need to transform headers
   const negotiatorHeaders: Record<string, string> = {};
   request.headers.forEach((value, key) => (negotiatorHeaders[key] = value));

@@ -3,7 +3,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { getStrapiMedia, getStrapiURL } from "./utils/api-helpers";
-import { IntlProvider, FormattedMessage } from 'react-intl';
+import { cookies } from 'next/headers';
 
 import { i18n } from "../../../i18n-config";
 import Footer from "./components/Footer";
@@ -11,6 +11,8 @@ import Navbar from "./components/Navbar";
 import { GlobalProvider } from "./contexts/GlobalContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { getGlobal } from "./services/global";
+import { LocaleProvider, useLocale } from "./contexts/LocaleContext";
+import { useCookies } from "react-cookie";
 
 const FALLBACK_SEO = {
   title: "SFU Iranian Club",
@@ -18,7 +20,8 @@ const FALLBACK_SEO = {
 };
 
 export async function generateMetadata(): Promise<Metadata> {
-  const meta = await getGlobal();
+  const locale = cookies().get('LOCALE')?.value || 'en';
+  const meta = await getGlobal(locale);
 
   if (!meta.data) return FALLBACK_SEO;
 
@@ -41,7 +44,7 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: { lang: string };
 }) {
-  const global = await getGlobal();
+  const global = await getGlobal('en');
   // TODO: CREATE A CUSTOM ERROR PAGE
   if (!global.data) return null;
 
@@ -68,38 +71,40 @@ export default async function RootLayout({
   return (
     <html lang={params.lang}>
       <body>
-        <AuthProvider>
-          <GlobalProvider value={{ navbar, footer, background, socialLinks }}>
-            <div className="fixed top-0 left-0 right-0 z-50">
-              <Navbar
-                links={navbar.links}
-                logoUrl={navbarLogoUrl}
-                logoText={navbar.navbarLogo.logoText}
-                backgroundUrl={navbarBackgroundUrl}
+        <LocaleProvider>
+          <AuthProvider>
+            <GlobalProvider value={{ navbar, footer, background, socialLinks }}>
+              <div className="fixed top-0 left-0 right-0 z-50">
+                <Navbar
+                  links={navbar.links}
+                  logoUrl={navbarLogoUrl}
+                  logoText={navbar.navbarLogo.logoText}
+                  backgroundUrl={navbarBackgroundUrl}
+                />
+              </div>
+
+              <main
+                className={`dark:bg-black dark:text-gray-100 min-h-screen bg-gray-300 bg-cover bg-center ${backgroundUrl ? "" : "bg-none"
+                  }`}
+                style={{
+                  backgroundImage: backgroundUrl ? `url(${backgroundUrl})` : "none",
+                }}
+              >
+                {children}
+              </main>
+
+              <Footer
+                logoUrl={footerLogoUrl}
+                logoText={footer.footerLogo.logoText}
+                menuLinks={footer.menuLinks}
+                categoryLinks={footer.categories.data}
+                legalLinks={footer.legalLinks}
+                socialLinks={socialLinks}
+                backgroundUrl={footerBackgroundUrl}
               />
-            </div>
-
-            <main
-              className={`dark:bg-black dark:text-gray-100 min-h-screen bg-gray-300 bg-cover bg-center ${backgroundUrl ? "" : "bg-none"
-                }`}
-              style={{
-                backgroundImage: backgroundUrl ? `url(${backgroundUrl})` : "none",
-              }}
-            >
-              {children}
-            </main>
-
-            <Footer
-              logoUrl={footerLogoUrl}
-              logoText={footer.footerLogo.logoText}
-              menuLinks={footer.menuLinks}
-              categoryLinks={footer.categories.data}
-              legalLinks={footer.legalLinks}
-              socialLinks={socialLinks}
-              backgroundUrl={footerBackgroundUrl}
-            />
-          </GlobalProvider>
-        </AuthProvider>
+            </GlobalProvider>
+          </AuthProvider>
+        </LocaleProvider>
       </body>
     </html>
   );

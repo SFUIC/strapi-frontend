@@ -1,17 +1,12 @@
 import { fetchAPI } from "../utils/fetch-api";
+import { api_id } from "../../../../api-id-config";
 
-export async function getPageBySlug(slug: string) {
+export async function getPage(locale?: string) {
   const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
-  const path = `/pages`;
+  const path: string = `/pages`;
   const urlParamsObject = {
-    filters: { slug },
-    populate: {
-      metadata: { populate: "*" },
-      chunks: { populate: "*" },
-      shortName: { populate: "*" },
-      heading: { populate: "*" },
-      description: { populate: "*" },
-    },
+    locale: locale ? locale : "en",
+    populate: "deep",
   };
   const options = { headers: { Authorization: `Bearer ${token}` } };
   const response = await fetchAPI(path, urlParamsObject, options);

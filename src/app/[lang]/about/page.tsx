@@ -1,11 +1,13 @@
 import Image from 'next/image';
-import { getPageBySlug } from '../services/pageSvc';
+import { getPage } from '../services/pageSvc';
 import { getStrapiMedia } from '../utils/api-helpers';
+import { useLocale } from '../contexts/LocaleContext';
 
 export default async function AboutPage() {
-    const aboutPage = await getPageBySlug("about");
-    if (!aboutPage || !aboutPage.data) return null;
-    const { chunks } = aboutPage.data[0].attributes;
+    const locale = useLocale();
+    const pages = await getPage(locale);
+    if (!pages || !pages.data) return null;
+    const { chunks } = pages.data[0].attributes;
     const { title, description, picture } = chunks[0];
     const text = chunks[1].content;
     const heroBackgroundUrl = getStrapiMedia(picture.data.attributes.url);
