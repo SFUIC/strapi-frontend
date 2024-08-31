@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
 import SessionLink from "./SessionLink";
 import { useGlobal } from "../contexts/GlobalContext";
+import LocaleControl from "./LocaleControl";
 
 interface NavLink {
   id: number;
@@ -71,8 +72,9 @@ export default function Navbar({
             )}
             <SessionLink key={1} loginText={auth.loginText} logoutText={auth.logoutText} />
             {links.map((item: NavLink) => (
-              <NavLink key={item.id + 3} {...item} />
+              <NavLink key={item.id + 2} {...item} />
             ))}
+            <LocaleControl text={navbar.localeControlText} />
           </ul>
         </div>
 
