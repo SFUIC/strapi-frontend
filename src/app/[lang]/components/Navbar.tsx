@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
 import SessionLink from "./SessionLink";
+import { useGlobal } from "../contexts/GlobalContext";
 
 interface NavLink {
   id: number;
@@ -42,6 +43,8 @@ export default function Navbar({
   backgroundUrl: string | null;
 }) {
   const { userData } = useAuth();
+  const { navbar } = useGlobal();
+  const auth = navbar.authentication
   const userID = userData ? userData["cas:user"]["_text"] : null;
 
   return (
@@ -63,10 +66,10 @@ export default function Navbar({
           <ul className="items-stretch hidden space-x-3 lg:flex">
             {userID && (
               <li key={0} className={`flex items-center mx-4 -mb-1 border-b-2 dark:border-transparent`}>
-                Logged in as {userID}
+                {auth.loggedinText + userID}
               </li>
             )}
-            <SessionLink key={1} />
+            <SessionLink key={1} loginText={auth.loginText} logoutText={auth.logoutText} />
             {links.map((item: NavLink) => (
               <NavLink key={item.id + 3} {...item} />
             ))}

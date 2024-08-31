@@ -16,6 +16,7 @@ export async function getGlobal(): Promise<any> {
       "navbar.links",
       "navbar.navbarLogo.logoImg",
       "navbar.navbarBackground",
+      "navbar.authentication",
       "footer.footerLogo.logoImg",
       "footer.menuLinks",
       "footer.legalLinks",

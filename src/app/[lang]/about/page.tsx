@@ -7,8 +7,7 @@ export default async function AboutPage() {
     if (!aboutPage || !aboutPage.data) return null;
     const { chunks } = aboutPage.data[0].attributes;
     const { title, description, picture } = chunks[0];
-    const text = chunks[1].content; // This is the HTML content
-    console.log(text);
+    const text = chunks[1].content;
     const heroBackgroundUrl = getStrapiMedia(picture.data.attributes.url);
 
     return (

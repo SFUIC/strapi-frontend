@@ -83,7 +83,7 @@ export default function Profile() {
   if (!landingPage || !landingPage.data) return null;
   const { chunks } = landingPage.data[0].attributes;
   const { background, titleMain, titleSub } = chunks[0];
-  const { introDescription, joinLink } = chunks[1];
+  const { description, join } = chunks[1];
   const featureBannerBackgroundUrl = getStrapiMedia(background.data.attributes.url);
 
   if (isLoading) return <Loader />;
@@ -95,10 +95,10 @@ export default function Profile() {
         <div className="w-1/3 p-4">
           <div className="p-4 grid items-start gap-8">
             <div className="flex justify-center">
-              <Intro description={introDescription} joinLink={joinLink} />
+              <Intro description={description} joinText={join.text} joinLink={join.url} />
             </div>
             <div className="flex justify-center">
-              <FeedbackForm />
+              <FeedbackForm formData={chunks[2]} />
             </div>
           </div>
         </div>

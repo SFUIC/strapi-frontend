@@ -1,7 +1,27 @@
 import { useState } from "react";
 import axios from "axios";
 
-export default function FeedbackForm() {
+interface LeadForm {
+    contactPlaceholder: string;  // Placeholder text for the contact input (e.g., "E-mail")
+    contactTitle: string;        // Title or label for the contact input (e.g., "E-mail")
+    firstPlaceholder: string;    // Placeholder text for the first name input (e.g., "FirstName")
+    firstTitle: string;          // Title or label for the first name input (e.g., "First Name")
+    id: number;                  // Unique identifier for the form (e.g., 3)
+    messagePlaceholder: string;  // Placeholder text for the message input (e.g., "Your message here...")
+    messageTitle: string;        // Title or label for the message input (e.g., "Message")
+    secondPlaceholder: string;   // Placeholder text for the last name input (e.g., "Last Name")
+    secondTitle: string;         // Title or label for the last name input (e.g., "Last Name")
+    submitButton: {              // Information about the submit button
+        id: number;                // Unique identifier for the submit button (e.g., 3)
+        text: string;              // Text displayed on the submit button (e.g., "Send")
+        type: string;              // Type of the submit button (e.g., "primary")
+    };
+    title: string;               // Title of the form (e.g., "Contact Us")
+    sendSuccessMsg: string;
+    sendFailMsg: string;
+}
+
+export default function FeedbackForm({ formData }: { formData: LeadForm }) {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -21,10 +41,10 @@ export default function FeedbackForm() {
                     'Content-Type': 'application/json'
                 }
             });
-            alert("Feedback sent successfully! Thank you for your feedback.");
+            alert(formData.sendSuccessMsg);
         } catch (error) {
             console.error("Error sending feedback:", error);
-            alert("There was an error sending your feedback. Please try again.");
+            alert(formData.sendFailMsg);
         }
     };
 
@@ -36,54 +56,54 @@ export default function FeedbackForm() {
     return (
         <div className="bg-white rounded-lg shadow-md w-full max-w-md p-8">
             <form className="w-full max-w-lg" onSubmit={handleSubmit}>
-                <h2 className="text-2xl font-bold mb-6 text-center text-black">Contact Us</h2>
+                <h2 className="text-2xl font-bold mb-6 text-center text-black">{formData.title}</h2>
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="first-name">
-                        First Name
+                        {formData.firstTitle}
                     </label>
                     <input
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="first-name"
                         type="text"
-                        placeholder="First Name"
+                        placeholder={formData.firstPlaceholder}
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                     />
                 </div>
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="last-name">
-                        Last Name
+                        {formData.secondTitle}
                     </label>
                     <input
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="last-name"
                         type="text"
-                        placeholder="Last Name"
+                        placeholder={formData.secondPlaceholder}
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
                     />
                 </div>
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-                        E-mail
+                        {formData.contactTitle}
                     </label>
                     <input
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="email"
                         type="email"
-                        placeholder="Email"
+                        placeholder={formData.contactPlaceholder}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
                 <div className="mb-6">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="message">
-                        Message
+                        {formData.messageTitle}
                     </label>
                     <textarea
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="message"
-                        placeholder="Your message here..."
+                        placeholder={formData.messagePlaceholder}
                         rows={4}
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
@@ -94,7 +114,7 @@ export default function FeedbackForm() {
                         className="bg-sfuLightRed hover:bg-sfuDarkRed text-white mx-8 py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
                         type="submit"
                     >
-                        Send
+                        {formData.submitButton.text}
                     </button>
                 </div>
             </form>

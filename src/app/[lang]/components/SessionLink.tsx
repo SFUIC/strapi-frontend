@@ -4,9 +4,9 @@ import axios from 'axios'; // Import axios for making HTTP requests
 import Link from 'next/link'; // Adjust according to your routing library
 import { useAuth } from '../contexts/AuthContext';
 
-export default function SessionLink() {
+export default function SessionLink({ loginText, logoutText }: { loginText: string, logoutText: string }) {
     const { userData, setUserData } = useAuth();
-    const text = userData ? "Logout" : "Login";
+    const linkText = userData ? logoutText : loginText;
 
     const handleLoginClick = (e: any) => {
         e.preventDefault();
@@ -57,7 +57,7 @@ export default function SessionLink() {
                 className={`flex items-center mx-4 -mb-1 border-b-2 dark:border-transparent ${userData ? "dark:text-sfuDarkRed dark:border-sfuLightRed" : "dark:text-sfuDarkRed"}`}
                 onClick={handleLoginClick}
             >
-                {text}
+                {linkText}
             </Link>
         </li>
     );

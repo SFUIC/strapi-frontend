@@ -3,7 +3,6 @@ import { useGlobal } from "../contexts/GlobalContext";
 import { Key } from "react";
 import { RenderIcon } from "../utils/icon-renderer";
 import { SocialLink } from "../types";
-import { getLandingPage } from "../services/page";
 
 interface InfoLink {
     infoType: string;
@@ -11,7 +10,7 @@ interface InfoLink {
     url?: string; // URL is optional for non-link info types
 }
 
-export default function Intro({ description = "", joinLink = "/" }: { description: string, joinLink: string }) {
+export default function Intro({ description = "", joinText = "", joinLink = "/" }: { description: string, joinText: string, joinLink: string }) {
     const { socialLinks } = useGlobal();
     return (
         <div className="bg-white rounded-lg shadow-md w-full max-w-md mx-auto">
@@ -25,7 +24,7 @@ export default function Intro({ description = "", joinLink = "/" }: { descriptio
                     href={joinLink}
                     className="bg-sfuLightRed hover:bg-sfuDarkRed text-white mx-12 px-4 py-2 rounded-full w-full"
                 >
-                    <center>JOIN CLUB</center>
+                    <center>{joinText}</center>
                 </a>
             </div>
             <hr className="mx-8 border-gray-300" />
