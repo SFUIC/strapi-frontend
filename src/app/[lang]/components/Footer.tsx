@@ -46,6 +46,8 @@ export default function Footer({
   legalLinks,
   socialLinks,
   backgroundUrl,
+  categoryTitle,
+  menuTitle,
 }: {
   logoUrl: string | null;
   logoText: string | null;
@@ -54,6 +56,8 @@ export default function Footer({
   legalLinks: Array<SocialLink>;
   socialLinks: Array<SocialLink>;
   backgroundUrl: string | null;
+  categoryTitle: string,
+  menuTitle: string,
 }) {
   return (
     <footer
@@ -74,7 +78,7 @@ export default function Footer({
           </div>
 
           <div className="col-span-6 text-center md:text-left md:col-span-3">
-            <p className="pb-1 text-lg font-medium">Categories</p>
+            <p className="pb-1 text-lg font-medium">{categoryTitle}</p>
             <ul>
               {categoryLinks.map((link: CategoryLink) => (
                 <CategoryLink key={link.id} {...link} />
@@ -83,7 +87,7 @@ export default function Footer({
           </div>
 
           <div className="col-span-6 text-center md:text-left md:col-span-3">
-            <p className="pb-1 text-lg font-medium">Menu</p>
+            <p className="pb-1 text-lg font-medium">{menuTitle}</p>
             <ul>
               {menuLinks.map((link: SocialLink) => (
                 <FooterLink key={link.id} {...link} />

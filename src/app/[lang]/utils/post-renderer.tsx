@@ -9,7 +9,7 @@ export function postRenderer(section: any, index: number) {
   switch (section.__component) {
     case "shared.rich-text":
       return <RichText key={index} data={section} />;
-    case "sections.rich-text-CK":
+    case "shared.rich-text-ck":
       return <HTMLText key={index} data={section} />;
     case "shared.slider":
       return <ImageSlider key={index} data={section} />;

@@ -24,6 +24,8 @@ export async function getGlobal(locale?: string): Promise<any> {
       "footer.legalLinks",
       "footer.categories",
       "footer.footerBackground",
+      "footer.categoryTitle",
+      "footer.menuTitle",
       "background",
       "socialLinks",
     ],

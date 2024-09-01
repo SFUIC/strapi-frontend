@@ -33,12 +33,8 @@ const LocaleControl: React.FC<{ text?: string }> = ({ text = "Language" }) => {
 
         // Use router to navigate to the new locale's URL
         // Replace locale in path
-        const segments = pathname.split('/');
-        if (segments.length > 1) {
-            segments[1] = newLocale;
-        }
-        const newPathname = segments.join('/');
-        await router.push(newPathname + searchParams.toString());
+        const newPathname = "/" + newLocale;
+        await router.push(newPathname);
         router.refresh();
     };
 

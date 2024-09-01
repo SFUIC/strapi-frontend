@@ -100,6 +100,8 @@ export default async function RootLayout({
                 legalLinks={footer.legalLinks}
                 socialLinks={socialLinks}
                 backgroundUrl={footerBackgroundUrl}
+                categoryTitle={footer.categoryTitle}
+                menuTitle={footer.menuTitle}
               />
             </GlobalProvider>
           </AuthProvider>

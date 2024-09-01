@@ -8,11 +8,9 @@ import { i18n } from "../i18n-config";
 import { match as matchLocale } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
 
-export const LOCALE_COOKIE_NAME = "NEXT_LOCALE";
-
 function getLocale(request: NextRequest): string | undefined {
   const localeFromCookie: string | undefined =
-    request.cookies.get(LOCALE_COOKIE_NAME)?.value;
+    request.cookies.get("LOCALE")?.value;
 
   // @ts-ignore
   if (localeFromCookie && i18n.locales.includes(localeFromCookie)) {
@@ -52,7 +50,6 @@ export function middleware(request: NextRequest) {
   // Redirect if there is no locale
   if (pathnameIsMissingLocale) {
     const locale = getLocale(request);
-
     // e.g. incoming request is /products
     // The new URL is now /en-US/products
     return NextResponse.redirect(
