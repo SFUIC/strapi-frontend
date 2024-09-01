@@ -1,15 +1,16 @@
 import Image from 'next/image';
-import { getPage } from '../services/pageSvc';
+import { getPages } from '../services/pages';
 import { getStrapiMedia } from '../utils/api-helpers';
-import { useLocale } from '../contexts/LocaleContext';
+import { cookies } from 'next/headers';
 
 export default async function AboutPage() {
-    const locale = useLocale();
-    const pages = await getPage(locale);
+    const locale = cookies().get("LOCALE")?.value;
+    const pages = await getPages(locale);
     if (!pages || !pages.data) return null;
     const { chunks } = pages.data[0].attributes;
     const { title, description, picture } = chunks[0];
-    const text = chunks[1].content;
+    const text = chunks[1].body;
+    const containsHTML = /<\/?[a-z][\s\S]*>/i.test(text);
     const heroBackgroundUrl = getStrapiMedia(picture.data.attributes.url);
 
     return (
@@ -34,10 +35,16 @@ export default async function AboutPage() {
             {/* Content Section */}
             <div className="py-12 px-6 md:px-12 flex justify-center">
                 <div className="max-w-2xl w-full">
-                    <div
-                        className="text-black text-lg md:text-xl leading-relaxed"
-                        dangerouslySetInnerHTML={{ __html: text }}
-                    />
+                    {containsHTML ?
+                        <div
+                            className="text-black text-lg md:text-xl leading-relaxed"
+                            dangerouslySetInnerHTML={{ __html: text }}
+                        />
+                        :
+                        <div className="text-black text-lg md:text-xl leading-relaxed">
+                            {text}
+                        </div>
+                    }
                 </div>
             </div>
         </div>

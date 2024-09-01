@@ -1,10 +1,11 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import { fetchAPI } from "../utils/fetch-api";
 
 import Loader from "../components/Loader";
 import PostList from "../components/PostList";
 import { MdExpandMore } from "react-icons/md";
+import { getArticles } from "../services/articles";
+import { useLocale } from "../contexts/LocaleContext";
 
 interface Meta {
     pagination: {
@@ -18,28 +19,12 @@ export default function Posts() {
     const [meta, setMeta] = useState<Meta | undefined>();
     const [data, setData] = useState<any>([]);
     const [isLoading, setLoading] = useState(true);
+    const { locale } = useLocale();
 
     const fetchData = useCallback(async (start: number, limit: number) => {
         setLoading(true);
         try {
-            const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
-            const path = `/articles`;
-            const urlParamsObject = {
-                sort: { createdAt: "desc" },
-                populate: {
-                    cover: { fields: ["url"] },
-                    category: { populate: "*" },
-                    authorsBio: {
-                        populate: "*",
-                    },
-                },
-                pagination: {
-                    start: start,
-                    limit: limit,
-                },
-            };
-            const options = { headers: { Authorization: `Bearer ${token}` } };
-            const responseData = await fetchAPI(path, urlParamsObject, options);
+            const responseData = await getArticles(start, limit, locale);
 
             if (start === 0) {
                 setData(responseData.data);

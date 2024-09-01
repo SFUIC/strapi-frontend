@@ -11,8 +11,7 @@ import Navbar from "./components/Navbar";
 import { GlobalProvider } from "./contexts/GlobalContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { getGlobal } from "./services/global";
-import { LocaleProvider, useLocale } from "./contexts/LocaleContext";
-import { useCookies } from "react-cookie";
+import { LocaleProvider } from "./contexts/LocaleContext";
 
 const FALLBACK_SEO = {
   title: "SFU Iranian Club",
@@ -20,8 +19,7 @@ const FALLBACK_SEO = {
 };
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = cookies().get('LOCALE')?.value || 'en';
-  const meta = await getGlobal(locale);
+  const meta = await getGlobal();
 
   if (!meta.data) return FALLBACK_SEO;
 
@@ -44,7 +42,8 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: { lang: string };
 }) {
-  const global = await getGlobal('en');
+  const locale = cookies().get("LOCALE")?.value;
+  const global = await getGlobal(locale);
   // TODO: CREATE A CUSTOM ERROR PAGE
   if (!global.data) return null;
 

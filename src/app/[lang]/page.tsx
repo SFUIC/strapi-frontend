@@ -8,9 +8,10 @@ import PageHeader from "./components/PageHeader";
 import Intro from "./components/Intro";
 import FeedbackForm from "./components/FeedbackForm";
 import { MdExpandMore } from "react-icons/md";
-import { getPage } from "./services/pageSvc";
+import { getPages } from "./services/pages";
 import { getStrapiMedia } from "./utils/api-helpers";
 import { useLocale } from "./contexts/LocaleContext";
+import { getArticles } from "./services/articles";
 
 interface Meta {
   pagination: {
@@ -30,24 +31,7 @@ export default function Profile() {
   const fetchData = useCallback(async (start: number, limit: number) => {
     setLoading(true);
     try {
-      const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
-      const path = `/articles`;
-      const urlParamsObject = {
-        sort: { createdAt: "desc" },
-        populate: {
-          cover: { fields: ["url"] },
-          category: { populate: "*" },
-          authorsBio: {
-            populate: "*",
-          },
-        },
-        pagination: {
-          start: start,
-          limit: limit,
-        },
-      };
-      const options = { headers: { Authorization: `Bearer ${token}` } };
-      const responseData = await fetchAPI(path, urlParamsObject, options);
+      const responseData = await getArticles(start, limit, locale);
 
       if (start === 0) {
         setData(responseData.data);
@@ -70,7 +54,7 @@ export default function Profile() {
 
   const fetchLandingPage = useCallback(async () => {
     try {
-      const landingPage = await getPage(locale);
+      const landingPage = await getPages(locale);
       setLandingPage(landingPage);
     } catch (error) {
       console.error("Failed to fetch landing page data:", error);
