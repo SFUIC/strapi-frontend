@@ -38,13 +38,15 @@ export default async function CategoryRoute({
   const filter = params.category;
   const { data } = await fetchPostsByCategory(filter);
 
-  if (data.length === 0) return <div>Not Posts In this category</div>;
+  if (data.length === 0) return (
+    <h2 className="text-center text-3xl font-bold py-6">N/A</h2>
+  );
 
   const { name, description } = data[0]?.attributes.category.data.attributes;
 
   return (
     <div>
-      <h2>{name}</h2>
+      <h2 className="text-center text-3xl font-bold py-6">"{name}"</h2>
       <PostList cols={2} data={data} />
     </div>
   );

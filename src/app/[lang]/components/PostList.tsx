@@ -1,5 +1,5 @@
 // ./strapi-frontend/src/app/[lang]/components/PostList.tsx
-
+"use client"
 import Image from "next/image";
 import Link from "next/link";
 import { getStrapiMedia, formatDate } from "../utils/api-helpers";
