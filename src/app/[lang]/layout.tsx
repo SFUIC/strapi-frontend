@@ -67,8 +67,6 @@ export default async function RootLayout({
 
   const backgroundUrl = getStrapiMedia(background?.data?.attributes?.url);
 
-  console.log(footer.categories.data)
-
   return (
     <html lang={params.lang}>
       <body>
