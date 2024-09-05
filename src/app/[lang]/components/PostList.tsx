@@ -47,17 +47,15 @@ interface Article {
 }
 
 export default function PostList({
-  cols,
   data: articles,
   children,
 }: {
-  cols: Number;
   data: Article[];
   children?: React.ReactNode;
 }) {
   return (
     <section className="container p-6 mx-auto space-y-6 sm:space-y-12">
-      <div className={`grid justify-center grid-cols-${cols} gap-6`}>
+      <div className={`grid justify-center grid-cols-[repeat(auto-fit,minmax(360px,1fr))] gap-8`}>
         {articles.map((article) => {
           const imageUrl = getStrapiMedia(
             article.attributes.cover.data?.attributes.url

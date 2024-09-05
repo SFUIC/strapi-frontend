@@ -47,7 +47,7 @@ export default async function CategoryRoute({
   return (
     <div>
       <h2 className="text-center text-3xl font-bold py-6">"{name}"</h2>
-      <PostList cols={2} data={data} />
+      <PostList data={data} />
     </div>
   );
 }

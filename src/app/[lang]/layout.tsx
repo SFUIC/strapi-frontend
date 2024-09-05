@@ -83,10 +83,13 @@ export default async function RootLayout({
               </div>
 
               <main
-                className={`dark:bg-black dark:text-gray-100 min-h-screen bg-gray-300 bg-cover bg-center ${backgroundUrl ? "" : "bg-none"
+                className={`dark:bg-black dark:text-gray-100 min-h-screen bg-contain bg-repeat bg-center bg-gray-300 bg-cover bg-center ${backgroundUrl ? "" : "bg-none"
                   }`}
                 style={{
                   backgroundImage: backgroundUrl ? `url(${backgroundUrl})` : "none",
+                  backgroundSize: 'contain', // Adjust the size to maintain aspect ratio
+                  backgroundRepeat: 'repeat', // Repeat the image in both directions
+                  backgroundPosition: 'center', // Position the image in the center
                 }}
               >
                 {children}

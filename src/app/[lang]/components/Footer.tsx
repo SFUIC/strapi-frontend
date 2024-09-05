@@ -79,7 +79,7 @@ export default function Footer({
 
           <div className="col-span-6 text-center md:text-left md:col-span-3">
             <p className="pb-1 text-lg font-medium">{categoryTitle}</p>
-            <ul>
+            <ul className="list-none flex flex-col items-center md:items-start">
               {categoryLinks.map((link: CategoryLink) => (
                 <CategoryLink key={link.id} {...link} />
               ))}
@@ -88,7 +88,7 @@ export default function Footer({
 
           <div className="col-span-6 text-center md:text-left md:col-span-3">
             <p className="pb-1 text-lg font-medium">{menuTitle}</p>
-            <ul>
+            <ul className="list-none flex flex-col items-center md:items-start">
               {menuLinks.map((link: SocialLink) => (
                 <FooterLink key={link.id} {...link} />
               ))}
@@ -112,7 +112,7 @@ export default function Footer({
               ))}
             </ul>
           </div>
-          <div className="flex justify-center pt-4 space-x-4 lg:pt-0 lg:col-end-13">
+          <div className="flex flex-wrap justify-center pt-4 space-x-4 lg:pt-0 lg:col-end-13">
             {socialLinks.map((link: SocialLink) => {
               return (
                 <a

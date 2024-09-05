@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import { fetchAPI } from "./utils/fetch-api";
 
 import Loader from "./components/Loader";
 import PostList from "./components/PostList";
@@ -77,8 +76,8 @@ export default function Profile() {
   return (
     <div className="h-full">
       <PageHeader headingMain={titleMain} headingSub={titleSub} mediaSrc={featureBannerBackgroundUrl} mediaExt={background.data.attributes.ext} />
-      <div className="flex flex-row">
-        <div className="w-1/3 p-4">
+      <div className="flex flex-col lg:flex-row">
+        <div className="lg:w-1/3 p-4">
           <div className="p-4 grid items-start gap-8">
             <div className="flex justify-center">
               <Intro description={description} joinText={join.text} joinLink={join.url} />
@@ -88,8 +87,8 @@ export default function Profile() {
             </div>
           </div>
         </div>
-        <div className="w-2/3 p-4">
-          <PostList cols={2} data={data}>
+        <div className="lg:w-2/3 p-4">
+          <PostList data={data}>
             {meta!.pagination.start + meta!.pagination.limit <
               meta!.pagination.total && (
                 <div className="flex justify-center">

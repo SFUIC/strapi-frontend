@@ -55,7 +55,7 @@ export default function Posts() {
         <div>
             <div className="flex flex-row">
                 <div className="w-full p-4">
-                    <PostList cols={3} data={data}>
+                    <PostList data={data}>
                         {meta!.pagination.start + meta!.pagination.limit <
                             meta!.pagination.total && (
                                 <div className="flex justify-center">

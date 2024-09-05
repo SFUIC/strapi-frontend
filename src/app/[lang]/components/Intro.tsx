@@ -33,7 +33,7 @@ export default function Intro({ description = "", joinText = "", joinLink = "/" 
                     <div key={index} className="flex items-center space-x-2">
                         <RenderIcon type={link.social} />
                         {link.url ? (
-                            <a href={link.url} className="text-gray-600 hover:underline">
+                            <a href={link.url} className="text-gray-600 hover:underline w-full break-all">
                                 {link.url}
                             </a>
                         ) : (

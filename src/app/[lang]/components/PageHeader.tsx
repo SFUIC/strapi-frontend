@@ -19,7 +19,7 @@ export default function PageHeader({
 }: PageHeaderProps) {
   const mediaType = parseMediaExt(mediaExt);
   return (
-    <div className="relative w-full text-left overflow-hidden flex items-center justify-left" style={{ height: '160px' }}>
+    <div className="relative w-full text-left overflow-hidden flex items-center justify-left">
       {/* Background Media */}
       {mediaType === "video" ? (
         <video
@@ -32,7 +32,7 @@ export default function PageHeader({
         />
       ) : (
         <img
-          className="absolute top-0 left-0 w-full object-cover z-0"
+          className="absolute top-0 left-0 w-full h-full object-cover z-0"
           src={mediaSrc ? mediaSrc : ""}
           alt="Background Media"
         />
@@ -41,8 +41,8 @@ export default function PageHeader({
       {/* Overlay for darkening the background media */}
       <div className="absolute inset-0 ml-36 bg-black w-80 h-full -skew-x-12 opacity-50 z-10"></div>
       {/* Text Content */}
-      <div className="relative ml-40 z-20" style={{ width: '300px' }}>
-        <h2 className="text-4xl lg:text-5xl font-bold font-heading text-white"
+      <div className="relative ml-40 z-20 my-8">
+        <h2 className="text-2xl lg:text-5xl font-bold font-heading text-white"
           style={{ fontFamily: font ? font : "Trebuchet MS" }}>
           {headingMain}
           <br />
