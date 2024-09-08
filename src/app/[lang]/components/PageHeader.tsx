@@ -18,6 +18,7 @@ export default function PageHeader({
   mediaExt,
 }: PageHeaderProps) {
   const mediaType = parseMediaExt(mediaExt);
+  console.log("mediaExt: " + mediaExt)
   return (
     <div className="relative w-full text-left overflow-hidden flex items-center justify-left">
       {/* Background Media */}
