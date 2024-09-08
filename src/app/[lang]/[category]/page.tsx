@@ -53,5 +53,6 @@ export default async function CategoryRoute({
 }
 
 export async function generateStaticParams() {
+  //
   return [];
 }
