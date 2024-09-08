@@ -34,6 +34,7 @@ async function getMetaData(slug: string, locale?: string) {
   return response.data;
 }
 
+//
 export async function generateMetadata({
   params,
 }: {
