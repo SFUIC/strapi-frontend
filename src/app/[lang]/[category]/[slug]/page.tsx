@@ -73,7 +73,7 @@ export async function generateStaticParams() {
     options
   );
 
-  return articleResponse.data.map(
+  return (articleResponse & articleResponse.data) ? articleResponse.data.map(
     (article: {
       attributes: {
         slug: string;
@@ -82,5 +82,5 @@ export async function generateStaticParams() {
         };
       };
     }) => ({ slug: article.attributes.slug, category: article.attributes.slug })
-  );
+  ) : [];
 }
